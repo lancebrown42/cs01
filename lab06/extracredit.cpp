@@ -75,32 +75,53 @@ void addToLongest(int biggest[], int size, int value) {
 
 }
 bool isVampire(int num){
-
+  
   stringstream ss;
+  stringstream concatOne;
+  stringstream concatTwo;
   ss << num;
   string numS = ss.str();
   int size = numS.size();
-  
   if (size == 4){//true condition
     int characters[size];
     for (int i = 0; i < size; i++) {
       characters[i] = numS[i] - '0';
     }
     
-   /* for (int i = 0; i < size; i++){
+    for (int i = 0; i < size; i++){
       for (int j = 0; j < size; j++){
         for (int k = 0; k < size; k++){
           for (int l = 0; l < size; l++){
             if (i == j || i == k || i == l || j == k || j == l || k == l){
               continue;
             }
+            int fangOne;
+            int fangTwo;
+            int firstCharacter = characters[i];
+            int secondCharacter = characters[j];
+            int thirdCharacter = characters[k];
+            int fourthCharacter = characters[l];
+            concatOne << firstCharacter << secondCharacter;
+            concatOne >> fangOne;
+            concatTwo << thirdCharacter << fourthCharacter;
+            concatTwo >> fangTwo;
+            
+            
+            cout <<"num: " << num << setw(5) << " fang one: " << fangOne << setw(5) << " Fang two: " << fangTwo << endl;
+           // cout << "i: " << i << setw(5) << " | " << setw(5) << "j: " << j << setw(5) << " | " << setw(5) << "k: " << k << setw(5) << " | " << setw(5) << "l: " << l << endl;
+            cout << "first character: " << firstCharacter << setw(5) << " second character: " << secondCharacter << setw(5) << " third: " << thirdCharacter << setw(5) << " fourth: "  << fourthCharacter << endl;
+            if (fangOne * fangTwo == num){
+              
+              return true;
+            }
+            
           }
         }
       }
     }
-    */
+    
   }
-
+return false;
 
 }
 
@@ -162,6 +183,7 @@ int main() {
   evenOutFile.close();
   oddOutFile.close();
   primeOutFile.close();
+  vampOutFile.close();
   cout << "Numbers read in: " << count << endl;
   cout << "Even numbers: " << evenCount << endl;
   cout << "Odd numbers: " << oddCount << endl;
