@@ -77,8 +77,6 @@ void addToLongest(int biggest[], int size, int value) {
 bool isVampire(int num){
   
   stringstream ss;
-  stringstream concatOne;
-  stringstream concatTwo;
   ss << num;
   string numS = ss.str();
   int size = numS.size();
@@ -95,21 +93,15 @@ bool isVampire(int num){
             if (i == j || i == k || i == l || j == k || j == l || k == l){
               continue;
             }
+            
             int fangOne;
             int fangTwo;
-            int firstCharacter = characters[i];
-            int secondCharacter = characters[j];
-            int thirdCharacter = characters[k];
-            int fourthCharacter = characters[l];
-            concatOne << firstCharacter << secondCharacter;
-            concatOne >> fangOne;
-            concatTwo << thirdCharacter << fourthCharacter;
-            concatTwo >> fangTwo;
+            ss << characters[i] << characters[j] << endl;
+            ss >> fangOne;
+            ss << characters[k] << characters[l] << endl;
+            ss >> fangTwo;
             
             
-            cout <<"num: " << num << setw(5) << " fang one: " << fangOne << setw(5) << " Fang two: " << fangTwo << endl;
-           // cout << "i: " << i << setw(5) << " | " << setw(5) << "j: " << j << setw(5) << " | " << setw(5) << "k: " << k << setw(5) << " | " << setw(5) << "l: " << l << endl;
-            cout << "first character: " << firstCharacter << setw(5) << " second character: " << secondCharacter << setw(5) << " third: " << thirdCharacter << setw(5) << " fourth: "  << fourthCharacter << endl;
             if (fangOne * fangTwo == num){
               
               return true;
