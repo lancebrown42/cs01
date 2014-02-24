@@ -37,27 +37,28 @@
 #include <iomanip>
 using namespace std;
 
-struct Product{
+struct Product{ //custom type for products
   string name;
   float price;
   float reviews;
 };
 
 
-void printProduct(Product &p){
+void printProduct(Product &p){ //will print out one product's information
   cout << " " << setprecision(2) << fixed << p.price << " " << setprecision(1) << fixed << p.reviews << " stars: " << p.name << endl;
 }
-void printSorted(Product p[], int size){
+void printSorted(Product p[], int size){//will print all products sorted however they're sorted
   for (int i = 0; i < size; i++){
     printProduct(p[i]);
   }
 }
 
 void ratingSort(Product p[], int size){//this is a selection sort
+                                       //sorted by review
   for (int fill = 0; fill < size -1; fill ++){
     int posMin = fill;
     for (int next = fill + 1; next < size; next ++){
-      if (p[next].reviews > p[posMin].reviews){
+      if (p[next].reviews > p[posMin].reviews){//have to do > rather than < for descending order
         posMin = next;
       }
     }
@@ -72,6 +73,7 @@ void ratingSort(Product p[], int size){//this is a selection sort
 
 }
 void priceSort(Product p[], int size){//this is a bubble sort
+                                      //sorted by price
   bool sorted = false;
   int maxId = size - 1;
   Product tmp;
@@ -99,7 +101,7 @@ int main() {
   getline(inFile,line);
   const int SIZE = atoi(line.c_str());//how many products will be read, given by first value in file
   Product myProducts[SIZE];
-  for (int i = 0; i < SIZE; i++){
+  for (int i = 0; i < SIZE; i++){//read in each line and give it a home in the array
     getline(inFile,line);
     myProducts[i].name = line;
     getline(inFile,line);
@@ -107,22 +109,22 @@ int main() {
     getline(inFile, line);
     myProducts[i].reviews = atof(line.c_str()); 
   }
-  char sortType = 0;
+  char sortType = 0;//will be replaced by user input
   cout << "Popular tablets:" << endl;
-  printSorted(myProducts,SIZE);
+  printSorted(myProducts,SIZE);//list the products unsorted
   while (sortType != 'q'){
     cout << "Sort by price ('p'), review ('r'), or quit ('q')? ";
     cin >> sortType;
     check:
-    if (sortType == 'q'){
+    if (sortType == 'q'){//quit condition
      break;
-    } else if (sortType == 'p'){
+    } else if (sortType == 'p'){//sort by price
         cout << endl << "Sorted by price:" << endl;
         priceSort(myProducts,SIZE);
-    } else if (sortType == 'r'){
+    } else if (sortType == 'r'){//sort by review
         cout << endl << "Sorted by rating:" << endl;
         ratingSort(myProducts,SIZE);
-    } else {
+    } else {//invalid input
         cout << "Please enter 'p', 'r', or 'q': ";
         cin >> sortType;
         goto check;
