@@ -25,9 +25,17 @@ using namespace std;
 const char DEAD = '.';
 const char ALIVE = 'O';
 
+void printTest(int* neigh, int width, int height){
+  for (int i = 0; i < height; i++){
+    for (int j = 0; j < width; j++){
+      cout << *(neigh + (width * i) + j) << " ";
+    }
+    cout << endl;
+  }
+}
 
 void printBoard(char* board, int width, int height){
-  cout << "\033[2J\033[1;1H";
+ // cout << "\033[2J\033[1;1H";
   
   for (int i = 0; i < height; i++){
     for (int j = 0; j < width; j++){
@@ -222,6 +230,7 @@ int adjacentEdge(char* board, int offset, int width, int height, int edge){
 char* advance(char* board, int width, int height){
   int size = width * height;
   char* refresh = new char[size];
+  int* nextTo = new int[size];
   int neighbors = 0;
   for (int i = 0; i < size; i++){
     char* oldCell = board + i;
@@ -230,8 +239,10 @@ char* advance(char* board, int width, int height){
     edge = isEdge(board, i, width, height);
     if (isEdge(board, i, width, height) == 0){
       neighbors = adjacent(board, i, width, height);
+      *(nextTo + i) = neighbors;
     } else if (!(isEdge(board, i , width, height) == 0)){
       neighbors = adjacentEdge(board, i, width, height, edge);
+      *(nextTo + i) = neighbors;
     }
     if (*oldCell == ALIVE){
       if (neighbors < 2 || neighbors > 3){
@@ -251,22 +262,9 @@ char* advance(char* board, int width, int height){
     }
   }
   cout << endl;
+  printTest(nextTo,width,height);
   return refresh;
 }
-bool gameOver (char* board, int width, int height){
-  int size = width * height;
-  bool endGame = true;
-  for (int i = 0; i < size; i++){
-    for (int j = 0; j < size; j++){
-      if (*(board + (i * width) + j) == ALIVE){
-        return false;
-        
-      }
-    }
-  }
-  return true;
-
-  }
 
 int main (int argc, char*argv[]) {
   //Default generations to run is 100, but allow the user to 
@@ -285,12 +283,9 @@ int main (int argc, char*argv[]) {
     cin >> board[i];
   }
   printBoard(board, width, height);
-  for (int i = 0; i < generationsToRun && !gameOver(board, width, height); i++){
-    board = advance(board, width, height);
-    cout << "\033[1;1H";
-    printBoard(board, width, height);
-    usleep(50000);
-  }
+  board = advance(board, width, height);
+  cout << endl<<endl;
+  printBoard(board, width, height);
   cout << endl;
   delete[] board;
   
