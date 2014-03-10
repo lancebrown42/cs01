@@ -5,15 +5,24 @@
 //
 // ***********************
 //
-// Description: 
+// Description: Conway's game of life, given a starting board, the game progresses a set number of generations following a set of rules:
+//     1. Any live cell with fewer than 2 live neighbors dies
+//     2. Any live cell with two or three live neighbors lives
+//     3. Any live cell with more than 3 live neighbors dies
+//     4. Any dead cell with exactly three live neighbors becomes a live cell 
 //
-// Input:
+// Input: (optional) number of desired generations, Starting board as a .txt file
 //
-// Output:
+// Output: A display of each generation
 //
-// Procedure:
+// Procedure: Program reads in the txt file and assigns all the values to a char*, which it then
+//     passes to the advancement function. This function checks all of the values on the board
+//     to determine what their next state will be, and assigns the next state to a new board char*.
+//     It checks each value for an edge case, as there is a different function to calculate the 
+//     state of edges. It then returns the new board back to main and it loops until either the
+//     final generation, or until all cells die
 //
-// Constraints:
+// Constraints: .txt file must start with height and width of board
 //
 // *****************************
 
@@ -221,8 +230,8 @@ int adjacentEdge(char* board, int offset, int width, int height, int edge){
 
 char* advance(char* board, int width, int height){
   int size = width * height;
-  char* refresh = new char[size];
   int neighbors = 0;
+  char* refresh = new char[size];
   for (int i = 0; i < size; i++){
     char* oldCell = board + i;
     char* newCell = refresh + i;
@@ -251,6 +260,7 @@ char* advance(char* board, int width, int height){
     }
   }
   cout << endl;
+  delete[] board;
   return refresh;
 }
 bool gameOver (char* board, int width, int height){
@@ -292,8 +302,8 @@ int main (int argc, char*argv[]) {
     usleep(50000);
   }
   cout << endl;
-  delete[] board;
   
+  delete[] board;
   return 0;
 
 }
