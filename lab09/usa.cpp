@@ -20,7 +20,7 @@ double convert(double x, double min){
 void draw(ifstream &inFile, ofstream &outFile, double minLong, double maxLat){
   string subregion;
   string region;
-  string multiword;//keeps washington dc, new-anything from fucking everyhting up
+  string multiword;
   int points = 0;
   double x = 0;
   double y = 0;
@@ -57,9 +57,6 @@ int main(){
   double maxLat = 0;
   int regions = 0;
   inFile >> minLong >> minLat >> maxLong >> maxLat >> regions;
-  cout << "Min long: " << minLong << " lat: " << minLat << endl;
-  cout << "Max long: " << maxLong << " lat: " << maxLat << endl;
-  cout << "Regions: " << regions << endl;
   double width = 0;
   double height = 0;
   width = convert(maxLong,minLong);
@@ -72,6 +69,5 @@ int main(){
   outFile << " </svg>" ;
   inFile.close();
   outFile.close();
-  cout << "height: " << height << endl << "width: " << width << endl;
   return 0;
 }
