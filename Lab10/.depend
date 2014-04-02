@@ -1,0 +1,3 @@
+usa.o: usa.cpp
+BoundingBox.o: BoundingBox.cpp BoundingBox.h
+Point.o: Point.cpp
