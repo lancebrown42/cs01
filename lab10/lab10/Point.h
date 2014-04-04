@@ -1,8 +1,8 @@
 /*
  * Point.h
- *
- *  Created on: Apr 2, 2014
- *      Author: lance
+ * Author: Lance Brown
+ * CS1021-001
+ * Laboratory 10
  */
 
 #ifndef SOURCE_H_
@@ -17,12 +17,13 @@ public:
 	virtual ~Point();
 	void setX(double x);
 	void setY(double y);
-	double getX(double x);
-	double getY(double y);
-	
+	double getX();
+	double getY();
+	void translatePoint(Point &point);
 	
 private:
 	double x;
+private:
 	double y;
 	
 	

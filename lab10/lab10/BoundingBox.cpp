@@ -1,12 +1,14 @@
 /*
  * BoundingBox.cpp
- *
- *  Created on: Apr 2, 2014
- *      Author: lance
+ * Author: Lance Brown
+ * CS1021-001
+ * Laboratory 10
  */
 #include <iostream>
 #include <BoundingBox.h>
 #include <cmath>
+#include <Point.h>
+#include <fstream>
 using namespace std;
 
 
@@ -29,7 +31,12 @@ BoundingBox::BoundingBox(double minLat, double minLong, double maxLat,
 	height = translateLatitude(minLatitude) - translateLatitude(maxLatitude);
 }
 
-BoundingBox::BoundingBox(double width, double height) {
+BoundingBox::BoundingBox(Point &point) {
+	minLongitude = -124.731216; //I have no idea how to do this correctly
+	maxLatitude = 49.384365;
+	point.setX(translateLongitude(point.getX()));
+	point.setY(translateLatitude(point.getY()));
+
 }
 
 double BoundingBox::translateLatitude(double latitude) {

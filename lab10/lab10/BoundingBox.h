@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include <string>
+#include<Point.h>
 
 using namespace std;
 
@@ -18,19 +19,26 @@ class BoundingBox {
 public:
 	BoundingBox();
 	BoundingBox(double minLatitude, double minLongitude, double maxLatitude, double maxLongitude);
-	BoundingBox(double width, double height);
+	BoundingBox(Point &point);
 	virtual ~BoundingBox();
 	double getWidth();
 	double getHeight();
 
 private:
 	double minLongitude;
+private:
 	double minLatitude;
+private:
 	double maxLongitude;
+private:
 	double maxLatitude;
+private:
 	double width;
+private:
 	double height;
+private:
 	double translateLatitude(double latitude);
+private:
 	double translateLongitude(double longitude);
 
 };

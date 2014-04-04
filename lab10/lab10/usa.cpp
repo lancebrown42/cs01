@@ -1,9 +1,17 @@
 /*****************************
- * USA USA USA USA USA USA
- *
- *
- *
- *
+ * usa.cpp
+ * Author: Lance Brown
+ * CS1021-001
+ * Laboratory 10
+ * *********************
+ * Description: Takes input from a text file listing coordinates for state boundaries and outputs an html file which maps
+ *     the country as a vector image.
+ * Input: USA.txt
+ * Output: usa.html
+ * Procedure: Reads in the min and max lat and long for the map, converts it to a positive x,y plane for html use,
+ *     then reads in each region and makes the same conversion for each coordinate point and writes the points in
+ *     an SVG function in an html document. Same as in Lab 9, only using the BoundingBox and Point classes.
+ * Constraints: Only works in the Northwestern hemisphere
  * **************************/
 
 #include <iostream> 
@@ -11,14 +19,11 @@
 #include <cmath>
 #include <string>
 #include <BoundingBox.h>
+#include <Point.h>
 using namespace std;
 
-double convert(double x, double min){
-  x -= min;
-  x *= 20;
-  return abs(x);
-}
-void draw(ifstream &inFile, ofstream &outFile, double minLong, double maxLat, BoundingBox box){
+
+void draw(ifstream &inFile, ofstream &outFile){
   string subregion;
   string region;
   string multiword;
@@ -27,7 +32,7 @@ void draw(ifstream &inFile, ofstream &outFile, double minLong, double maxLat, Bo
   double y = 0;
     inFile >> subregion;
     if (subregion == "District"){
-      inFile >> multiword >> multiword;
+      inFile >> multiword >> multiword; //keeps dc, new-anything and north,south,west whatever from messing it all up
     }else if (subregion == "New" || subregion == "North" || subregion == "South" || subregion == "West" || subregion == "Rhode"){
       inFile >> multiword;
     }
@@ -36,9 +41,9 @@ void draw(ifstream &inFile, ofstream &outFile, double minLong, double maxLat, Bo
   outFile << "<polygon points=\"";
   for (int i = 0; i < points; i++){
     inFile >> x >> y;
-    x = box.translateLongitude(x);
-    y = box.translateLatitude(y);
-    outFile << x << "," << y;
+    Point point = Point(x,y);//turns it into an object
+    point.translatePoint(point);//converts to usable coordinates
+    outFile << point.getX() << "," << point.getY();
     if (i < points - 1){
       outFile << " ";
     }
@@ -58,12 +63,12 @@ int main(){
   double maxLat = 0;
   int regions = 0;
   inFile >> minLong >> minLat >> maxLong >> maxLat >> regions;
-  BoundingBox box(minLat,minLong,maxLat,maxLong);
+  BoundingBox box(minLat,minLong,maxLat,maxLong);//defines width and height in usable coordinates
   double width = box.getWidth();
   double height = box.getHeight();
   outFile << "<svg height=\"" << height << "\" width=\"" << width <<"\">" << endl;
   for (int i = 0; i < regions; i++){
-    draw(inFile, outFile, minLong, maxLat, box);
+    draw(inFile, outFile);
     
   }
   outFile << " </svg>" ;
