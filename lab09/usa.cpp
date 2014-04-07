@@ -30,7 +30,11 @@ double convert(double x, double min){
 void draw(ifstream &inFile, ofstream &outFile, double minLong, double maxLat){
   string subregion;
   string region;
+<<<<<<< HEAD
   string multiword;//keeps washington dc, new-anything from ballsing it up
+=======
+  string multiword;
+>>>>>>> e550844291d85e039d1b3e21f75f52dac067722e
   int points = 0;
   double x = 0;
   double y = 0;
@@ -67,8 +71,13 @@ int main(){
   double maxLat = 0;// max latitude
   int regions = 0; //number of "states" or regions to be read
   inFile >> minLong >> minLat >> maxLong >> maxLat >> regions;
+<<<<<<< HEAD
   double width = 0;//canvas width converted
   double height = 0;//canvas height converted
+=======
+  double width = 0;
+  double height = 0;
+>>>>>>> e550844291d85e039d1b3e21f75f52dac067722e
   width = convert(maxLong,minLong);
   height = convert(maxLat,minLat);
   outFile << "<svg height=\"" << height << "\" width=\"" << width <<"\">" << endl;
