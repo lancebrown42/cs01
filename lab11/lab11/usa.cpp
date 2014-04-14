@@ -28,73 +28,74 @@ using namespace std;
 const double HEIGHT = 500;
 const double WIDTH = 1130;
 
+int main() {
+	ifstream inFile;
+	ofstream outFile;
+	inFile.open("USA-county.txt");
+	outFile.open("usa.html");
+	double minLong = 0;
+	double minLat = 0;
+	double maxLong = 0;
+	double maxLat = 0;
+	int regions = 0;
+	stringstream ss;
+	string line;
+	//minLong, minLat, maxLong, maxLat, regions
+	getline(inFile, line);
+	ss << line;
+	ss >> line;
+	minLong = atof(line.c_str());
+	ss >> line;
+	minLat = atof(line.c_str());
+	ss.clear();
+	getline(inFile, line);
+	ss << line;
+	ss >> line;
+	maxLong = atof(line.c_str());
+	ss >> line;
+	maxLat = atof(line.c_str());
+	getline(inFile, line);
+	regions = atoi(line.c_str());
 
+	 cout << "minLong: "<< minLong << "  minLat: " << minLat << endl;
+	 cout << "maxLong: "<< maxLong << "  maxLat: " << maxLat << endl;
+	 cout << "regions: "<< regions << endl;
 
-int main(){
-  ifstream inFile;
-  ofstream outFile;
-  inFile.open("USA-county.txt");
-  outFile.open("usa.html");
-  double minLong = 0;
-  double minLat = 0;
-  double maxLong = 0;
-  double maxLat = 0;
-  int regions = 0;
-  stringstream ss;
-  string line;
-  //minLong, minLat, maxLong, maxLat, regions
-  getline(inFile,line);
-  ss << line;
-  ss >> line;
-  minLong = atof(line.c_str());
-  ss >> line;
-  minLat = atof(line.c_str());
-  ss.clear();
-  getline(inFile,line);
-  ss << line;
-  ss >> line;
-  maxLong = atof(line.c_str());
-  ss >> line;
-  maxLat = atof(line.c_str());
-  getline(inFile,line);
-  regions = atoi(line.c_str());
+	BoundingBox box(minLat, minLong, maxLat, maxLong, WIDTH, HEIGHT); //defines width and height in usable coordinates
+	outFile << "<html><body>" << endl;
+	outFile << "<svg height=\"" << HEIGHT << "\" width=\"" << WIDTH << "\">"
+			<< endl;
+	for (int regionNum = 0; regionNum < regions; regionNum++) {
+		//cout << regionNum << endl;
+		while (!inFile.eof()) {
+			string token = "";
+			string regionName = "";
+			while (token != "USA") {
+				getline(inFile, token);
+				if (token != "USA") {
+					if (regionName == "") {
+						regionName = token;
+					} else {
+						regionName += " ";
+						regionName += token;
+					}
+				}
+			}
+			int numPoints;
+			getline(inFile, line);
+			numPoints = atoi(line.c_str());
+			Polygon poly(regionName);
+			for (int i = 0; i < numPoints; i++) {
+				getline(inFile, line);
+				Point p(line);
+				poly.addPoint(p);
+			}
+			outFile << poly.getSVG(box);
 
-  /*cout << "minLong: "<< minLong << "  minLat: " << minLat << endl;
-  cout << "maxLong: "<< maxLong << "  maxLat: " << maxLat << endl;
-  cout << "regions: "<< regions << endl;
-*/
-  BoundingBox box(minLat,minLong,maxLat,maxLong, WIDTH, HEIGHT);//defines width and height in usable coordinates
-  outFile << "<html><body>" << endl;
-  outFile << "<svg height=\"" << HEIGHT << "\" width=\"" << WIDTH <<"\">" << endl;
-  for (int regionNum = 0; regionNum < regions; regionNum++){
-	  //cout << regionNum << endl;
-    string token = "";
-    string regionName = "";
-    while (token != "USA"){
-    	 getline(inFile,token);
-    	if (token != "USA"){
-    		if (regionName == ""){
-    			regionName = token;
-    		} else {
-    			regionName += " ";
-    			regionName += token;
-    		}
-    	}
-    }
-    int numPoints;
-    getline(inFile,line);
-    numPoints = atoi(line.c_str());
-    Polygon poly(regionName);
-    for (int i = 0; i < numPoints; i++) {
-    	getline(inFile,line);
-    	Point p(line);
-    	poly.addPoint(p);
-    }
-    outFile << poly.getSVG(box);
-    
-  }
-  outFile << " </svg></body></html>" << endl;
-  inFile.close();
-  outFile.close();
-  return 0;
+		}
+	}
+	outFile << " </svg></body></html>" << endl;
+	inFile.close();
+	outFile.close();
+	return 0;
 }
