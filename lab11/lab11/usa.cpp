@@ -21,6 +21,8 @@
 #include "BoundingBox.h"
 #include <cstdlib>
 #include "Polygon.h"
+#include <sstream>
+#include <stdlib.h>
 using namespace std;
 
 const double HEIGHT = 500;
@@ -36,7 +38,14 @@ int main(){
   double maxLong = 0;
   double maxLat = 0;
   int regions = 0;
-  inFile >> minLong >> minLat >> maxLong >> maxLat >> regions;
+  stringstream ss;
+  string line;
+  for (int i = 0; i < 6; i++){
+	  getline(inFile,line);
+	  ss << line;
+  }
+
+  ss >> minLong >> minLat >> maxLong >> maxLat >> regions;
   BoundingBox box(minLat,minLong,maxLat,maxLong, WIDTH, HEIGHT);//defines width and height in usable coordinates
   outFile << "<html><body>" << endl;
   outFile << "<svg height=\"" << HEIGHT << "\" width=\"" << WIDTH <<"\">" << endl;
@@ -44,7 +53,7 @@ int main(){
     string token = "";
     string regionName = "";
     while (token != "USA"){
-    	inFile >> token;
+    	 getline(inFile,token);
     	if (token != "USA"){
     		if (regionName == ""){
     			regionName = token;
@@ -55,12 +64,12 @@ int main(){
     	}
     }
     int numPoints;
-    inFile >> numPoints;
+    getline(inFile,line);
+    numPoints = atoi(line.c_str());
     Polygon poly(regionName);
-    double latitude, longitude;
     for (int i = 0; i < numPoints; i++) {
-    	inFile >> longitude >> latitude;
-    	Point p(longitude, latitude);
+    	getline(inFile,line);
+    	Point p(line);
     	poly.addPoint(p);
     }
     outFile << poly.getSVG(box);

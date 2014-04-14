@@ -5,6 +5,7 @@
  * Laboratory 10
  */
 #include "Point.h"
+#include <sstream>
 
 using namespace std;
 
@@ -12,7 +13,10 @@ Point::Point(double x, double y) {
 	this->x = x;
 	this->y = y;
 }
-
+Point::Point(string line){
+	stringstream ss(line);
+	ss >> x >> y;
+}
 
 void Point::setX(double x) {
 	this->x = x;
@@ -31,6 +35,8 @@ double Point::getX() {
 double Point::getY() {
 	return y;
 }
+
+
 
 
 

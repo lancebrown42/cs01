@@ -7,11 +7,13 @@
 
 #ifndef SOURCE_H_
 #define SOURCE_H_
+#include <string>
 using namespace std;
 
 class Point {
 public:
 	Point(double x, double y);
+	Point(string line);
 	void setX(double x);
 	void setY(double y);
 	double getX();

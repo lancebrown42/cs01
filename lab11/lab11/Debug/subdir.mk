@@ -3,6 +3,12 @@
 ################################################################################
 
 # Add inputs and outputs from these tool invocations to the build variables 
+O_SRCS += \
+../BoundingBox.o \
+../Point.o \
+../Polygon.o \
+../usa.o 
+
 CPP_SRCS += \
 ../BoundingBox.cpp \
 ../Point.cpp \
