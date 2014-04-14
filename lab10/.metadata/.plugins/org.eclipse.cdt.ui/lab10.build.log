@@ -1,0 +1,10 @@
+
+**** Build of configuration Default for project lab10 ****
+
+make all 
+rm -f ./.depend
+g++ -c -Wall -ggdb -I. -MM usa.cpp BoundingBox.cpp Point.cpp >> ./.depend;
+g++ -c -Wall -ggdb -I. Point.cpp -o Point.o
+g++  usa.o BoundingBox.o Point.o -o a.out
+
+**** Build Finished ****

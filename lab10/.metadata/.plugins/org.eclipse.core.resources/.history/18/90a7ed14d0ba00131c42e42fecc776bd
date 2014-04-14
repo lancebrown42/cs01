@@ -1,0 +1,32 @@
+/*
+ * BoundingBox.cpp
+ *
+ *  Created on: Apr 2, 2014
+ *      Author: lance
+ */
+#include <iostream>
+#include <BoundingBox.h>
+using namespace std;
+
+
+
+
+BoundingBox::BoundingBox() {
+}
+
+BoundingBox::BoundingBox(double minLat, double minLong, double maxLat,
+		double maxLong) {
+	minLatitude = minLat;
+	minLongitude = minLong;
+	maxLatitude = maxLat;
+
+}
+
+BoundingBox::BoundingBox(double width, double height) {
+}
+
+double BoundingBox::translateLatitude(double latitude) {
+}
+
+double BoundingBox::translateLongitude(double longitude) {
+}
