@@ -1,0 +1,4 @@
+usa.o: usa.cpp BoundingBox.h Point.h Polygon.h
+BoundingBox.o: BoundingBox.cpp BoundingBox.h Point.h
+Point.o: Point.cpp Point.h
+Polygon.o: Polygon.cpp Polygon.h BoundingBox.h Point.h
