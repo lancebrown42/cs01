@@ -28,10 +28,12 @@ using namespace std;
 const double HEIGHT = 500;
 const double WIDTH = 1130;
 
+
+
 int main(){
   ifstream inFile;
   ofstream outFile;
-  inFile.open("USA.txt");
+  inFile.open("USA-county.txt");
   outFile.open("usa.html");
   double minLong = 0;
   double minLat = 0;
@@ -40,16 +42,32 @@ int main(){
   int regions = 0;
   stringstream ss;
   string line;
-  for (int i = 0; i < 6; i++){
-	  getline(inFile,line);
-	  ss << line;
-  }
+  //minLong, minLat, maxLong, maxLat, regions
+  getline(inFile,line);
+  ss << line;
+  ss >> line;
+  minLong = atof(line.c_str());
+  ss >> line;
+  minLat = atof(line.c_str());
+  ss.clear();
+  getline(inFile,line);
+  ss << line;
+  ss >> line;
+  maxLong = atof(line.c_str());
+  ss >> line;
+  maxLat = atof(line.c_str());
+  getline(inFile,line);
+  regions = atoi(line.c_str());
 
-  ss >> minLong >> minLat >> maxLong >> maxLat >> regions;
+  /*cout << "minLong: "<< minLong << "  minLat: " << minLat << endl;
+  cout << "maxLong: "<< maxLong << "  maxLat: " << maxLat << endl;
+  cout << "regions: "<< regions << endl;
+*/
   BoundingBox box(minLat,minLong,maxLat,maxLong, WIDTH, HEIGHT);//defines width and height in usable coordinates
   outFile << "<html><body>" << endl;
   outFile << "<svg height=\"" << HEIGHT << "\" width=\"" << WIDTH <<"\">" << endl;
   for (int regionNum = 0; regionNum < regions; regionNum++){
+	  //cout << regionNum << endl;
     string token = "";
     string regionName = "";
     while (token != "USA"){
