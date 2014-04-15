@@ -15,12 +15,15 @@ using namespace std;
 class Polygon{
 
 public:
-	Polygon(string region);
+	Polygon(string region, string boundingName);
 	void addPoint(Point p);
 	string getSVG(BoundingBox &box);
+	string getRegionName();
+	string getBoundingName();
 private:
 	vector<Point> points;
 	string region;
+	string boundingName;
 
 
 

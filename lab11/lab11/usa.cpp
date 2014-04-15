@@ -38,6 +38,7 @@ int main() {
 	double maxLong = 0;
 	double maxLat = 0;
 	int regions = 0;
+	vector<Polygon> polygons;
 	stringstream ss;
 	string line;
 	//minLong, minLat, maxLong, maxLat, regions
@@ -66,33 +67,31 @@ int main() {
 	outFile << "<svg height=\"" << HEIGHT << "\" width=\"" << WIDTH << "\">"
 			<< endl;
 	for (int regionNum = 0; regionNum < regions; regionNum++) {
-		//cout << regionNum << endl;
+
 		while (!inFile.eof()) {
-			string token = "";
+			string boundingName = "";
 			string regionName = "";
-			while (token != "USA") {
-				getline(inFile, token);
-				if (token != "USA") {
-					if (regionName == "") {
-						regionName = token;
-					} else {
-						regionName += " ";
-						regionName += token;
-					}
-				}
-			}
+			getline(inFile, line);
+			getline(inFile, regionName);
+			getline(inFile, boundingName);
+
 			int numPoints;
 			getline(inFile, line);
 			numPoints = atoi(line.c_str());
-			Polygon poly(regionName);
+
+			Polygon poly(regionName,boundingName);
 			for (int i = 0; i < numPoints; i++) {
 				getline(inFile, line);
 				Point p(line);
 				poly.addPoint(p);
 			}
-			outFile << poly.getSVG(box);
+			polygons.push_back(poly);
 
 		}
+	}
+	for (int polyNum = 0; polyNum < polygons.size(); polyNum++){
+		Polygon p = polygons[polyNum];
+		outFile << p.getSVG(box);
 	}
 	outFile << " </svg></body></html>" << endl;
 	inFile.close();

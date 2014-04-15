@@ -9,8 +9,9 @@
 #include <sstream>
 
 
-Polygon::Polygon(string region) {
+Polygon::Polygon(string region, string boundingName) {
 	this->region = region;
+	this->boundingName = boundingName;
 }
 
 
@@ -32,4 +33,13 @@ string Polygon::getSVG(BoundingBox &box) {
 	ss << "\" style=\"fill:white;stroke:black;stroke-width:1\" />" << endl;
 	return ss.str();
 }
+
+string Polygon::getRegionName() {
+	return region;
+}
+
+string Polygon::getBoundingName() {
+	return boundingName;
+}
+
 
