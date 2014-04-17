@@ -23,6 +23,8 @@
 #include "Polygon.h"
 #include <sstream>
 #include <stdlib.h>
+#include <set>
+#include "County.h"
 using namespace std;
 
 const double HEIGHT = 500;
@@ -89,9 +91,44 @@ int main() {
 
 		}
 	}
-	for (int polyNum = 0; polyNum < polygons.size(); polyNum++){
+	set<string> states;
+	for (unsigned int i = 0; i < polygons.size(); i++){
+		states.insert(polygons[i].getBoundingName());
+	}
+	vector<County> counties;
+	  for (set<string>::iterator it = states.begin(); it != states.end(); it++) {
+	    string fileName = (*it) + "2012.txt";
+	    ifstream countyFile;
+	    countyFile.open(fileName.c_str());
+    	string filler;
+    	string countyName;
+    	string repVote;
+    	string demVote;
+    	string othVote;
+    	getline(countyFile,filler);
+	    while (!countyFile.eof()){
+	    	getline(countyFile, countyName, ',');
+	    	getline(countyFile, repVote, ',');
+	    	getline(countyFile, demVote, ',');
+	    	getline(countyFile, othVote, ',');
+	    	string stateName = *it;
+	    	int rVote,dVote,oVote;
+	    	rVote = atoi(repVote.c_str());
+	    	dVote = atoi(demVote.c_str());
+	    	oVote = atoi(othVote.c_str());
+	    	County county(countyName,stateName,rVote,dVote,oVote);
+	    	counties.push_back(county);
+	    }
+
+	    // PROCESS THE FILE
+	    // read county description
+	    // add the county object to the counties vector
+
+	    countyFile.close();
+	  }
+	for (unsigned int polyNum = 0; polyNum < polygons.size(); polyNum++){
 		Polygon p = polygons[polyNum];
-		outFile << p.getSVG(box);
+		outFile << p.getSVG(box, counties);
 	}
 	outFile << " </svg></body></html>" << endl;
 	inFile.close();

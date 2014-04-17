@@ -5,8 +5,8 @@
  * Laboratory 10
  */
 
-#ifndef SOURCE_H_
-#define SOURCE_H_
+#ifndef POINT_H_
+#define POINT_H_
 #include <string>
 using namespace std;
 
@@ -28,4 +28,4 @@ private:
 
 
 
-#endif /* SOURCE_H_ */
+#endif /* POINT_H_ */

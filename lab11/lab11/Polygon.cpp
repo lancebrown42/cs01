@@ -21,7 +21,7 @@ void Polygon::addPoint(Point p) {
 }
 
 
-string Polygon::getSVG(BoundingBox &box) {
+string Polygon::getSVG(BoundingBox &box, vector<County> &counties) {
 	stringstream ss;
 	ss << "<!-- " << region << " -->" << endl;
 	ss << "<polygon points =\"";
@@ -30,7 +30,25 @@ string Polygon::getSVG(BoundingBox &box) {
 		box.translatePoint(p);
 		ss << p.getX() << "," << p.getY() << " ";
 	}
-	ss << "\" style=\"fill:white;stroke:black;stroke-width:1\" />" << endl;
+	int rVote, dVote, oVote;
+	for (int i = 0; i < counties.size(); i++){
+
+		if (region == counties[i].getCountyName()){
+			rVote = counties[i].getRVote();
+			dVote = counties[i].getDVote();
+			oVote = counties[i].getOVote();
+			break;
+		} else{
+			continue;
+		}
+	}
+	int allVotes;
+	allVotes = rVote + dVote + oVote;
+	double red, green, blue;
+	red = rVote / allVotes;
+	blue = dVote / allVotes;
+	green = oVote / allVotes;
+	ss << "\" style=\"fill:" << red << "," << green << "," << blue << ";stroke:black;stroke-width:1\" />" << endl;
 	return ss.str();
 }
 

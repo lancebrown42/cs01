@@ -1,4 +1,4 @@
-Polygon.d: ../Polygon.cpp ../Polygon.h ../BoundingBox.h ../Point.h \
+County.d: ../County.cpp ../Polygon.h ../BoundingBox.h ../Point.h \
  ../County.h
 
 ../Polygon.h:

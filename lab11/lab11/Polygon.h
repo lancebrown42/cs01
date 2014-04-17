@@ -10,6 +10,7 @@
 #include "BoundingBox.h"
 #include <vector>
 #include <string>
+#include "County.h"
 using namespace std;
 
 class Polygon{
@@ -17,7 +18,7 @@ class Polygon{
 public:
 	Polygon(string region, string boundingName);
 	void addPoint(Point p);
-	string getSVG(BoundingBox &box);
+	string getSVG(BoundingBox &box, vector<County> &counties);
 	string getRegionName();
 	string getBoundingName();
 private:

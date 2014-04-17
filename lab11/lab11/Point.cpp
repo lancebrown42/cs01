@@ -16,6 +16,7 @@ Point::Point(double x, double y) {
 Point::Point(string line){
 	stringstream ss(line);
 	ss >> x >> y;
+
 }
 
 void Point::setX(double x) {

@@ -1,7 +1,7 @@
 CC=g++
 CFLAGS=-c -Wall -ggdb -I.
 LDFLAGS=
-SOURCES=usa.cpp BoundingBox.cpp Point.cpp Polygon.cpp
+SOURCES=usa.cpp BoundingBox.cpp Point.cpp Polygon.cpp County.cpp
 EXECUTABLE=a.out
 
 OBJECTS=$(SOURCES:.cpp=.o)
