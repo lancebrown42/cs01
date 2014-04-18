@@ -2,15 +2,16 @@
  * usa.cpp
  * Author: Lance Brown
  * CS1021-001
- * Laboratory 10
+ * Laboratory 11/12
  * *********************
- * Description: Takes input from a text file listing coordinates for state boundaries and outputs an html file which maps
- *     the country as a vector image.
- * Input: USA.txt
+ * Description: Takes in a lot of text files about the country as data and outputs an HTML file that represents the
+ * 		voting allegiance of each county in a given election.
+ * Input: USA-county.txt, *2012.txt
  * Output: usa.html
  * Procedure: Reads in the min and max lat and long for the map, converts it to a positive x,y plane for html use,
- *     then reads in each region and makes the same conversion for each coordinate point and writes the points in
- *     an SVG function in an html document. Same as in Lab 9, only using the BoundingBox and Point classes.
+ *     then reads in each region (county) and makes the same conversion for each coordinate point. It then reads in the election
+ *     results for each region and calculates the "color" of its political affiliation in that year and writes the points and colors in
+ *     an SVG function in an html document.
  * Constraints: Only works in the Northwestern hemisphere
  * **************************/
 #include <istream>
@@ -44,20 +45,20 @@ int main() {
 	stringstream ss;
 	string line;
 	//minLong, minLat, maxLong, maxLat, regions
-	getline(inFile, line);
+	getline(inFile, line);//minlong/lat
 	ss << line;
 	ss >> line;
 	minLong = atof(line.c_str());
 	ss >> line;
 	minLat = atof(line.c_str());
 	ss.clear();
-	getline(inFile, line);
+	getline(inFile, line);//maxlong/lat
 	ss << line;
 	ss >> line;
 	maxLong = atof(line.c_str());
 	ss >> line;
 	maxLat = atof(line.c_str());
-	getline(inFile, line);
+	getline(inFile, line);//number of regions
 	regions = atoi(line.c_str());
 
 	 /*cout << "minLong: "<< minLong << "  minLat: " << minLat << endl;
@@ -68,7 +69,7 @@ int main() {
 	outFile << "<html><body>" << endl;
 	outFile << "<svg height=\"" << HEIGHT << "\" width=\"" << WIDTH << "\">"
 			<< endl;
-	for (int regionNum = 0; regionNum < regions; regionNum++) {
+	for (int regionNum = 0; regionNum < regions; regionNum++) {//makes a polygon of each region
 
 		while (!inFile.eof()) {
 			string boundingName = "";
@@ -81,7 +82,7 @@ int main() {
 			getline(inFile, line);
 			numPoints = atoi(line.c_str());
 
-			Polygon poly(regionName,boundingName);
+			Polygon poly(regionName,boundingName);//polygon
 			for (int i = 0; i < numPoints; i++) {
 				getline(inFile, line);
 				Point p(line);
@@ -91,19 +92,19 @@ int main() {
 
 		}
 	}
-	set<string> states;
+	set<string> states;//list of states
 	for (unsigned int i = 0; i < polygons.size(); i++){
-		states.insert(polygons[i].getBoundingName());
+		states.insert(polygons[i].getBoundingName());//witchcraft
 	}
 	//cout << states.size() << " states" << endl;
 	/*for (set<string>::iterator iti = states.begin(); iti != states.end(); iti++){
 		cout << (*iti) << endl;
 	}*/
-	vector<County> counties;
+	vector<County> counties;//vector of counties
 	//cout << "iterator" << endl;
 
 	  for (set<string>::iterator it = states.begin(); it != states.end(); it++) {
-	    if ((*it) == ""){
+	    if ((*it) == ""){//iterator magic
 	    	continue;
 	    }
 		string fileName = (*it) + "2012.txt";
@@ -115,9 +116,9 @@ int main() {
     	string repVote;
     	string demVote;
     	string othVote;
-    	getline(countyFile,filler);
+    	getline(countyFile,filler);//because whitespace
 	    while (!countyFile.eof()){
-
+	    	//read in county name and votes
 	    	getline(countyFile, countyName, ',');
 	    	//cout << countyName << endl;
 	    	getline(countyFile, repVote, ',');
@@ -150,7 +151,7 @@ int main() {
 	  }
 	for (unsigned int polyNum = 0; polyNum < polygons.size(); polyNum++){
 		Polygon p = polygons[polyNum];
-		outFile << p.getSVG(box, counties);
+		outFile << p.getSVG(box, counties);//write the html file
 	}
 	outFile << " </svg></body></html>" << endl;
 	inFile.close();

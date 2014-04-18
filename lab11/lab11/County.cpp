@@ -19,7 +19,7 @@
 	oVote = 0;
 }*/
 
-County::County(string countyName, string stateName, int rVote, int dVote, int oVote){
+County::County(string countyName, string stateName, int rVote, int dVote, int oVote){//default
 	setCountyName(countyName);
 	setStateName(stateName);
 	setVote(rVote,dVote,oVote);

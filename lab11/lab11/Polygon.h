@@ -2,7 +2,7 @@
  * Polygon.h
  *
  *  Created on: Apr 14, 2014
- *      Author: student
+ *      Author: Lance Brown
  */
 
 #ifndef POLYGON_H_

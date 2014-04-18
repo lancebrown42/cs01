@@ -10,19 +10,20 @@
 #include <iostream>
 
 
-Polygon::Polygon(string region, string boundingName) {
+Polygon::Polygon(string region, string boundingName) {//default constructor
 	this->region = region;
 	this->boundingName = boundingName;
 }
 
 
 
-void Polygon::addPoint(Point p) {
+void Polygon::addPoint(Point p) {//adds a point ot the polygon
 	points.push_back(p);
 }
 
 
-string Polygon::getSVG(BoundingBox &box, vector<County> &counties) {
+string Polygon::getSVG(BoundingBox &box, vector<County> &counties) {//writes the SVG html stuff to the .html file
+																	//calculates votes and color of each county
 	stringstream ss;
 	ss << "<!-- " << region << " -->" << endl;
 	ss << "<polygon points =\"";
@@ -61,7 +62,7 @@ string Polygon::getSVG(BoundingBox &box, vector<County> &counties) {
 	redDec = rVote / allVotes;
 	blueDec = dVote / allVotes;
 	greenDec = oVote / allVotes;
-	red = redDec * 255;
+	red = redDec * 255;//because the first number is between 0 and 1, have to get between 0 and 255
 	green = greenDec * 255;
 	blue = blueDec * 255;
 	ss << "\" style=\"fill:rgb(" << red << "," << green << "," << blue << ");stroke:black;stroke-width:1\" />" << endl;

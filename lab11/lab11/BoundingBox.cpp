@@ -10,7 +10,7 @@ using namespace std;
 
 
 BoundingBox::BoundingBox(double minLat, double minLong, double maxLat,
-		double maxLong, double width, double height) {
+		double maxLong, double width, double height) {//default constructor
 	minLatitude = minLat;
 	minLongitude = minLong;
 	maxLatitude = maxLat;
@@ -19,7 +19,7 @@ BoundingBox::BoundingBox(double minLat, double minLong, double maxLat,
 	this->height = height;
 }
 
-void BoundingBox::translatePoint(Point &point) {
+void BoundingBox::translatePoint(Point &point) {//translates from lat long to screen coords
 	point.setX(translateLongitude(point.getX()));
 	point.setY(translateLatitude(point.getY()));
 

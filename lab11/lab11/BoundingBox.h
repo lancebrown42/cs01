@@ -2,7 +2,7 @@
  * BoundingBox.h
  *
  *  Created on: Apr 2, 2014
- *      Author: lance
+ *      Author: Lance Brown
  */
 
 #ifndef BOUNDINGBOX_H_
