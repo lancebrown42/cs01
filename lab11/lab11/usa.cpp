@@ -13,7 +13,7 @@
  *     an SVG function in an html document. Same as in Lab 9, only using the BoundingBox and Point classes.
  * Constraints: Only works in the Northwestern hemisphere
  * **************************/
-
+#include <istream>
 #include <iostream> 
 #include <fstream>
 #include <cmath>
@@ -95,22 +95,44 @@ int main() {
 	for (unsigned int i = 0; i < polygons.size(); i++){
 		states.insert(polygons[i].getBoundingName());
 	}
+	cout << states.size() << " states" << endl;
+	/*for (set<string>::iterator iti = states.begin(); iti != states.end(); iti++){
+		cout << (*iti) << endl;
+	}*/
 	vector<County> counties;
+	cout << "iterator" << endl;
 	  for (set<string>::iterator it = states.begin(); it != states.end(); it++) {
-	    string fileName = (*it) + "2012.txt";
+	    if ((*it) == ""){
+	    	continue;
+	    }
+		string fileName = (*it) + "2012.txt";
 	    ifstream countyFile;
 	    countyFile.open(fileName.c_str());
-    	string filler;
+    	//cout << fileName << endl;
+	    string filler;
     	string countyName;
     	string repVote;
     	string demVote;
     	string othVote;
     	getline(countyFile,filler);
 	    while (!countyFile.eof()){
+
 	    	getline(countyFile, countyName, ',');
+	    	//cout << countyName << endl;
 	    	getline(countyFile, repVote, ',');
+	    	//cout << repVote << endl;
 	    	getline(countyFile, demVote, ',');
+	    	//cout << demVote << endl;
 	    	getline(countyFile, othVote, ',');
+	    	getline(countyFile, filler);
+	    	//cout << othVote << endl;
+	    	/*getline(countyFile, line);
+	    	ss << line;
+	    	ss >> countyName >> repVote >> othVote;
+	    	ss.clear();*/
+
+
+
 	    	string stateName = *it;
 	    	int rVote,dVote,oVote;
 	    	rVote = atoi(repVote.c_str());

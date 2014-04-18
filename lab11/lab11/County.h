@@ -11,7 +11,7 @@
 
 class County{
 public:
-	County();
+	//County();
 	County(string countyName, string stateName, int rVote, int dVote, int oVote);
 	int getRVote();
 	int getDVote();

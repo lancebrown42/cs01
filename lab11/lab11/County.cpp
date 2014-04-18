@@ -6,25 +6,24 @@
  */
 
 #include "Polygon.h"
+#include <iostream>
 
 
 
 
-
-County::County() {
+/*County::County() {
 	countyName = "";
 	stateName = "";
 	rVote = 0;
 	dVote = 0;
 	oVote = 0;
-}
+}*/
 
 County::County(string countyName, string stateName, int rVote, int dVote, int oVote){
-	this->countyName = countyName;
-	this->stateName = stateName;
-	this->rVote = rVote;
-	this->dVote = dVote;
-	this->oVote = oVote;
+	setCountyName(countyName);
+	setStateName(stateName);
+	setVote(rVote,dVote,oVote);
+	//cout << countyName << endl << stateName << endl << rVote << "   " << dVote << "    " << oVote << endl;
 }
 
 int County::getRVote() {
