@@ -60,9 +60,9 @@ int main() {
 	getline(inFile, line);
 	regions = atoi(line.c_str());
 
-	 cout << "minLong: "<< minLong << "  minLat: " << minLat << endl;
+	 /*cout << "minLong: "<< minLong << "  minLat: " << minLat << endl;
 	 cout << "maxLong: "<< maxLong << "  maxLat: " << maxLat << endl;
-	 cout << "regions: "<< regions << endl;
+	 cout << "regions: "<< regions << endl;*/
 
 	BoundingBox box(minLat, minLong, maxLat, maxLong, WIDTH, HEIGHT); //defines width and height in usable coordinates
 	outFile << "<html><body>" << endl;
@@ -95,12 +95,13 @@ int main() {
 	for (unsigned int i = 0; i < polygons.size(); i++){
 		states.insert(polygons[i].getBoundingName());
 	}
-	cout << states.size() << " states" << endl;
+	//cout << states.size() << " states" << endl;
 	/*for (set<string>::iterator iti = states.begin(); iti != states.end(); iti++){
 		cout << (*iti) << endl;
 	}*/
 	vector<County> counties;
-	cout << "iterator" << endl;
+	//cout << "iterator" << endl;
+
 	  for (set<string>::iterator it = states.begin(); it != states.end(); it++) {
 	    if ((*it) == ""){
 	    	continue;
@@ -145,7 +146,6 @@ int main() {
 	    // PROCESS THE FILE
 	    // read county description
 	    // add the county object to the counties vector
-
 	    countyFile.close();
 	  }
 	for (unsigned int polyNum = 0; polyNum < polygons.size(); polyNum++){
